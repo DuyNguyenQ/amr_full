@@ -1,0 +1,20 @@
+<launch>
+
+  <!-- Transformation Configuration ... Setting Up the Relationships Between Coordinate Frames --> 
+  <!-- file mo ta udrf -->
+  <include file="$(find urdf_tutorial)/launch/display.launch" />
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_laser" args="0.6 0.4 0.2 0.785 0 0 base_footprint laser 30" />
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_laser1" args="-0.6 -0.4 0.2 -2.356 0 0 base_footprint laser1 30" />
+  <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 30" />
+
+    <!-- SICK NAV350 -->
+  <include file="$(find sicktoolbox_wrapper)/launch/sicknav350.launch" />
+
+  <include file="$(find rplidar_ros)/launch/rplidar_a1.launch" />
+  
+  
+  <include file="$(find hector_slam_launch)/launch/tutorial.launch" />
+  
+  <include file="$(find ira_laser_tools)/launch/laserscan_multi_merger.launch" />
+
+</launch>

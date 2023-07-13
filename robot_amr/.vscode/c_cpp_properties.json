@@ -1,0 +1,50 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/robotamr/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/amcl/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/base_local_planner/include/**",
+        "/home/robotamr/catkin_ws/src/beginner_tutorials/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/carrot_planner/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/clear_costmap_recovery/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/costmap_2d/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/dwa_local_planner/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/global_planner/include/**",
+        "/home/robotamr/catkin_ws/src/hector_slam/hector_geotiff/include/**",
+        "/home/robotamr/catkin_ws/src/hector_slam/hector_map_tools/include/**",
+        "/home/robotamr/catkin_ws/src/hector_slam/hector_mapping/include/**",
+        "/home/robotamr/catkin_ws/src/hector_slam/hector_marker_drawing/include/**",
+        "/home/robotamr/catkin_ws/src/interactive_markers/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/map_server/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/move_base/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/move_slow_and_clear/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/nav_core/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/navfn/include/**",
+        "/home/robotamr/catkin_ws/src/jetson_nano_bot/navigation_data_pub/include/**",
+        "/home/robotamr/catkin_ws/src/new_agv_robot/include/**",
+        "/home/robotamr/catkin_ws/src/robot_agv/include/**",
+        "/home/robotamr/catkin_ws/src/robot_amr/include/**",
+        "/home/robotamr/catkin_ws/src/robot_pose_ekf/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/rotate_recovery/include/**",
+        "/home/robotamr/catkin_ws/src/sick_safetyscanners/include/**",
+        "/home/robotamr/catkin_ws/src/sicktoolbox/include/**",
+        "/home/robotamr/catkin_ws/src/teb_local_planner/include/**",
+        "/home/robotamr/catkin_ws/src/turtlebot3/turtlebot3_slam/include/**",
+        "/home/robotamr/catkin_ws/src/navigation/voxel_grid/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
