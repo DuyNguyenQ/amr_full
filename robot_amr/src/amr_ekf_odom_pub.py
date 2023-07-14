@@ -122,8 +122,8 @@ def Calculate_right_left():
     result_banh2 = (value_2_1 << 16) | (value_2_2 &0xFFFF)
 
     # chuyen doi quang duong di duoc
-    current_right = (result_banh1/(65535*5)) *2*PI*r
-    current_left = (result_banh2/(65535*5)) *(-2)*PI*r
+    current_right = (result_banh1/(65535*4)) *2*PI*r
+    current_left = (result_banh2/(65535*4)) *(-2)*PI*r
     #  xu ly banh trai de di khoang cach la +
     distance_right = current_right - previous_right
     distance_left = current_left - previous_left
