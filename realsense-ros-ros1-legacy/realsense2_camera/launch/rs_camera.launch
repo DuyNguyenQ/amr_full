@@ -1,7 +1,6 @@
 <launch>
 
-   <node name="imu" pkg="robot_amr" type="imu.py" >
-    </node>
+   
  
 
   <arg name="serial_no"           default=""/>

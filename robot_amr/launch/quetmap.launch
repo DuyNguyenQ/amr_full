@@ -2,19 +2,33 @@
 
   <!-- Transformation Configuration ... Setting Up the Relationships Between Coordinate Frames --> 
   <!-- file mo ta udrf -->
-  <include file="$(find urdf_tutorial)/launch/display.launch" />
-  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_laser" args="0.6 0.4 0.2 0.785 0 0 base_footprint laser 30" />
-  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_laser1" args="-0.6 -0.4 0.2 -2.356 0 0 base_footprint laser1 30" />
+
+
+  <!-- Transformation Configuration ... Setting Up the Relationships Between Coordinate Frames --> 
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser1" args="0.58 0.36 0 0.785 0 3.14 base_link scan1 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser2" args="-0.58 -0.36 0 -2.355 0 3.14 base_link scan2 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0 0 0 0 0 0 base_link laser 100" />
+  <node pkg="tf" type="static_transform_publisher" name="imu_broadcaster" args="0.6 0 -0.09 0 0 0 base_link imu 30" />
+  <node pkg="tf" type="static_transform_publisher" name="base_link_broadcaster" args="0 0 0.2 0 0 0 base_footprint base_link 30" />
+  <!-- odom to base_footprint transform will be provided by the robot_pose_ekf node -->
+  <!-- map to odom will be provided by the AMCL -->
   <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 30" />
-
-    <!-- SICK NAV350 -->
-  <include file="$(find sicktoolbox_wrapper)/launch/sicknav350.launch" />
-
-  <include file="$(find rplidar_ros)/launch/rplidar_a1.launch" />
+  <node pkg="tf" type="static_transform_publisher" name="map_to_odom1" args="0 0 0 0 0 0 odom base_footprint 30" />
   
   
-  <include file="$(find hector_slam_launch)/launch/tutorial.launch" />
+
+
+
+
+  <include file="$(find sick_safetyscanners)/launch/sick_safetyscanners1.launch" />
+  <include file="$(find sick_safetyscanners)/launch/sick_safetyscanners2.launch" />
+
+
   
   <include file="$(find ira_laser_tools)/launch/laserscan_multi_merger.launch" />
-
+  <include file="$(find hector_slam_launch)/launch/tutorial.launch" />
+  
+  
+  
+    
 </launch>

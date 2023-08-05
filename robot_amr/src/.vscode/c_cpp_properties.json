@@ -1,0 +1,49 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/user1/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/amcl/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/base_local_planner/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/carrot_planner/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/clear_costmap_recovery/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/costmap_2d/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/dwa_local_planner/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/global_planner/include/**",
+        "/home/user1/catkin_ws/src/amr/hector_slam/hector_geotiff/include/**",
+        "/home/user1/catkin_ws/src/amr/hector_slam/hector_map_tools/include/**",
+        "/home/user1/catkin_ws/src/amr/hector_slam/hector_mapping/include/**",
+        "/home/user1/catkin_ws/src/amr/hector_slam/hector_marker_drawing/include/**",
+        "/home/user1/catkin_ws/src/amr/imu_tools/imu_complementary_filter/include/**",
+        "/home/user1/catkin_ws/src/amr/imu_tools/imu_filter_madgwick/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/map_server/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/move_base/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/move_slow_and_clear/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/nav_core/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/navfn/include/**",
+        "/home/user1/catkin_ws/src/amr/jetson_nano_bot/navigation_data_pub/include/**",
+        "/home/user1/catkin_ws/src/new_agv_robot/include/**",
+        "/home/user1/catkin_ws/src/amr/realsense-ros-ros1-legacy/realsense2_camera/include/**",
+        "/home/user1/catkin_ws/src/amr/robot_pose_ekf/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/rotate_recovery/include/**",
+        "/home/user1/catkin_ws/src/amr/sick_safetyscanners/include/**",
+        "/home/user1/catkin_ws/src/amr/sicktoolbox/include/**",
+        "/home/user1/catkin_ws/src/amr/teb_local_planner/include/**",
+        "/home/user1/catkin_ws/src/turtlebot3/turtlebot3_slam/include/**",
+        "/home/user1/catkin_ws/src/amr/navigation/voxel_grid/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

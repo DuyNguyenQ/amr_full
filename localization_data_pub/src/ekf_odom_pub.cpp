@@ -26,7 +26,7 @@
 
 // Include various libraries
 #include "ros/ros.h"
-#include "std_msgs/Int16.h"
+#include "std_msgs/Int64.h"
 #include <nav_msgs/Odometry.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <tf2/LinearMath/Quaternion.h>
@@ -46,10 +46,10 @@ const double initialTheta = 0.00000000001;
 const double PI = 3.141592;
 
 // Robot physical constants
-const double TICKS_PER_REVOLUTION = 620; // For reference purposes.
-const double WHEEL_RADIUS = 0.033; // Wheel radius in meters
-const double WHEEL_BASE = 0.17; // Center of left tire to center of right tire
-const double TICKS_PER_METER = 3100; // Original was 2800
+const double TICKS_PER_REVOLUTION = 196608; // For reference purposes.
+const double WHEEL_RADIUS = 0.1; // Wheel radius in meters
+const double WHEEL_BASE = 0.62; // Center of left tire to center of right tire
+const double TICKS_PER_METER = 299728; // Original was 2800
 
 // Distance both wheels have traveled
 double distanceLeft = 0;
@@ -70,7 +70,7 @@ void set_initial_2d(const geometry_msgs::PoseStamped &rvizClick) {
 }
 
 // Calculate the distance the left wheel has traveled since the last cycle
-void Calc_Left(const std_msgs::Int16& leftCount) {
+void Calc_Left(const std_msgs::Int64& leftCount) {
 
   static int lastCountL = 0;
   if(leftCount.data != 0 && lastCountL != 0) {
@@ -90,7 +90,7 @@ void Calc_Left(const std_msgs::Int16& leftCount) {
 }
 
 // Calculate the distance the right wheel has traveled since the last cycle
-void Calc_Right(const std_msgs::Int16& rightCount) {
+void Calc_Right(const std_msgs::Int64& rightCount) {
   
   static int lastCountR = 0;
   if(rightCount.data != 0 && lastCountR != 0) {

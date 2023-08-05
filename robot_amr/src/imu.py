@@ -30,9 +30,9 @@ def callback_linear(data):
     global  linear_acceleration, linear_acceleration_x, linear_acceleration_y, linear_acceleration_z
 
    
-    linear_acceleration_x = data.linear_acceleration.z
-    linear_acceleration_y = data.linear_acceleration.x * (-1.0)
-    linear_acceleration_z = (data.linear_acceleration.y ) * (-1.0) 
+    linear_acceleration_x = data.linear_acceleration.z - 0.7
+    linear_acceleration_y = data.linear_acceleration.x * (-1.0)  + 0.1
+    linear_acceleration_z = (data.linear_acceleration.y - 0.2) * (-1.0) 
     
 def pub_imu():
     global angular_velocity_x, angular_velocity_y, angular_velocity_z, linear_acceleration_x, linear_acceleration_y, linear_acceleration_z

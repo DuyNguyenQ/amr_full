@@ -7,7 +7,7 @@ from pymodbus.client.sync import ModbusSerialClient
 
 # Thong so cai dat
 PI = 3.141592654
-wheel_base = 0.9
+wheel_base = 0.62
 
 
 # Gia tri van toc dua vao dong co
@@ -26,12 +26,17 @@ twist_angular = 0.0
 client = ModbusSerialClient(method="rtu", port = "/dev/ttyUSB0", baudrate = 115200,stopbits = 1, parity = "N",timeout = 0.1)
 client.connect()
 
+
+
+client.write_register(0x7C, 0xD8, unit= 0x01)
+client.write_register(0x7C, 0xD8, unit= 0x02)
+
 #accel
-client.write_register(0x2E,value=600,unit = 0x01)
-client.write_register(0x2E,value=600,unit = 0x02)
+client.write_register(0x2E,value=40,unit = 0x01)
+client.write_register(0x2E,value=40,unit = 0x02)
 # decel
-client.write_register(0x2F,value=600,unit = 0x01)
-client.write_register(0x2F,value=600,unit = 0x02)
+client.write_register(0x2F,value=80,unit = 0x01)
+client.write_register(0x2F,value=80,unit = 0x02)
 # speed
 client.write_register(0x30,value=0,unit = 0x01)
 client.write_register(0x30,value=0,unit = 0x02)
@@ -49,20 +54,34 @@ def callback_Velocity(data):
 def setVelocity():
     global value_banhtrai,value_banhphai, v_phai, v_trai, wheel_base, twist_linear,twist_angular
 
+    if abs(twist_linear) <= 0.1:
+        v_trai = round(- (wheel_base * twist_angular)/2, 3)
+        v_phai = round((wheel_base * twist_angular)/2 , 3)       
+    
+    elif abs(twist_angular) <= 0.2:
+        v_trai = round(twist_linear , 3)
+        v_phai = round(twist_linear , 3)      
+        
+    else:
+        v_trai = round(twist_linear - (wheel_base * twist_angular)/2, 3)
+        v_phai = round(twist_linear + (wheel_base * twist_angular)/2 , 3)   
+        
 
-    v_trai = round(twist_linear - (wheel_base * twist_angular)/2, 3)
-    v_phai = round(twist_linear + (wheel_base * twist_angular)/2 , 3)      
     value_banhtrai = round(v_trai * 4800 / 0.6283)
     value_banhphai = round(v_phai * 4800 / 0.6283)
-    if value_banhphai < 0:
-        client.write_register(0x30,value=2**16 - abs(value_banhphai),unit = 0x01)
-    elif value_banhphai >= 0:
-        client.write_register(0x30,value=value_banhphai,unit = 0x01)
     
-    if value_banhtrai <= 0:
-        client.write_register(0x30,value=abs(value_banhtrai),unit = 0x02)
-    elif value_banhtrai > 0:
-        client.write_register(0x30,value=2**16 - abs(value_banhtrai),unit = 0x02)   
+    value2=2**16 - abs(value_banhphai)
+    value1=2**16 - abs(value_banhtrai)
+    
+    if value_banhphai >= 0:
+        client.write_register(0x30,value= value_banhphai,unit = 0x02)
+    elif value_banhphai < 0:
+        client.write_register(0x30,value=value2,unit = 0x02)
+    
+    if value_banhtrai > 0:
+        client.write_register(0x30,value=value1,unit = 0x01)
+    elif value_banhtrai <= 0:
+        client.write_register(0x30,value=value_banhtrai,unit = 0x01)   
     
 def main():
     
@@ -72,8 +91,8 @@ def main():
     
     # Subscribe to ROS topics
 
-    rospy.Subscriber("cmd_vel", Twist, callback_Velocity)
-    rate = rospy.Rate(2)
+    rospy.Subscriber("/turtle1/cmd_vel" ,Twist, callback_Velocity)
+    rate = rospy.Rate(10)
     while not rospy.is_shutdown():
      
         setVelocity()
@@ -83,6 +102,6 @@ def main():
           
 if __name__ == "__main__":
     try:
-        main()
+        main() 
     except rospy.ROSInterruptException:
         pass

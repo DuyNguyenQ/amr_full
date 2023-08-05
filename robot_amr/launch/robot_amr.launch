@@ -3,8 +3,11 @@
   <!-- Transformation Configuration ... Setting Up the Relationships Between Coordinate Frames --> 
   <!-- file mo ta udrf -->
   <include file="$(find urdf_tutorial)/launch/display.launch" />
-  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_laser" args="0.6 0.4 0.2 0.785 0 0 base_footprint laser 30" />
-  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_laser1" args="-0.6 -0.4 0.2 -2.356 0 0 base_footprint laser1 30" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_laser1" args="0.6 0.4 0.2 0.785 0 3.14 base_link scan1 30" />
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_laser2" args="-0.6 -0.4 0.2 -2.356 0 3.14 base_link scan2 30" />
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link" args="0 0 0 0 0 0 base_footprint base_link 30" />
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_linkk" args="0 0 0 0 0 0 base_link laser 30" />
 
   
   
@@ -13,29 +16,29 @@
   <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 30" />
 
 
-  <!-- chuong trinh xu ly toc do dong co -->
-  <!-- Subscribe: /cmd_vel -->
-  <node name="amr_setvelocity" pkg="robot_amr" type="amr_setvelocity.py"  output = "screen"  >
+
+  
+   <node pkg="localization_data_pub" type="rviz_click_to_2d" name="rviz_click_to_2d">
   </node>
   
-  
-   <!-- chuong trinh nhan yeu cau tu server cac tram goal -->
-    <!-- Subscribe: /nut_nhan, cac yeu cau tu server -->
-  <!-- Publish: /odom_data_euler, /odom_data_quat -->
- 
+
   
   
    <!-- chuong trinh xu ly tinh toan vi tri robot -->
     <!-- Subscribe: /initial_2d, /goal_2d -->
   <!-- Publish: /odom_data_euler, /odom_data_quat -->
-  <node name="amr_ekf_odom_pub" pkg="robot_amr" type="amr_ekf_odom_pub.py"   >
+  <node name="amr_ekf_odom_pub" pkg="robot_amr" type="amr_ekf_odom_pub.py" output="screen"  >
   </node>
 
 
-
-  
     <!-- SICK NAV350 -->
-  <include file="$(find sicktoolbox_wrapper)/launch/sicknav350.launch" />
+  <include file="$(find sick_safetyscanners)/launch/sick_safetyscanners2.launch" />
+
+  <include file="$(find sick_safetyscanners)/launch/sick_safetyscanners1.launch" />
+  
+ 
+ 
+ 
 	
   <!-- Extended Kalman Filter from robot_pose_ekf Node-->
   <!-- Subscribe: /odom, /imu_data, /vo -->
@@ -54,6 +57,9 @@
     <param name="debug" value="false"/>
     <param name="self_diagnose" value="false"/>
   </node>
+
+
+  
 	
 	
   <!-- Initial Pose and Goal Publisher -->
@@ -64,13 +70,12 @@
 
     <!-- Subscribe: /initialpose, /move_base_simple/goal -->
   <!-- Publish: /initial_2d, /goal_2d --> 
-  <node pkg="localization_data_pub" type="rviz_click_to_2d" name="rviz_click_to_2d">
-  </node> 
+ 
 
  
 
  <!-- Map File -->
-  <arg name="map_file" default="$(find robot_amr)/maps/nmk_layout.yaml"/>
+  <arg name="map_file" default="$(find robot_amr)/maps/goctuong.yaml"/>
 	
 	
   
@@ -78,44 +83,42 @@
   <!-- Add AMCL example for differential drive robots for Localization -->
   <!-- Subscribe: /scan, /tf, /initialpose, /map -->
   <!-- Publish: /amcl_pose, /particlecloud, /tf -->
-  <include file="$(find amcl)/examples/amcl_diff.launch"/>
+  <include file="$(find amcl)/examples/amcl_diff.launch"/> 
 	
 	
  <!-- Map Server -->
   <!-- Publish: /map, /map_metadata -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />
   
-
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch" />
   
-    <!-- IMU Data Publisher Using the BNO055 IMU Sensor -->
-  <!-- Publish: /imu/data -->
-     <include file="$(find realsense2_camera)/launch/rs_camera.launch" />
+  
+
   
   
    <!-- Move Base Node -->
   <!-- Subscribe: /move_base_simple/goal -->
   <!-- Publish: /cmd_vel -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-  	<rosparam file="$(find teb_local_planner_tutorials)/cfg/diff_drive/costmap_common_params.yaml" command="load" ns="global_costmap" />
+  <rosparam file="$(find teb_local_planner_tutorials)/cfg/diff_drive/costmap_common_params.yaml" command="load" ns="global_costmap" />
  	<rosparam file="$(find teb_local_planner_tutorials)/cfg/diff_drive/costmap_common_params.yaml" command="load" ns="local_costmap" />
 	<rosparam file="$(find teb_local_planner_tutorials)/cfg/diff_drive/local_costmap_params.yaml" command="load"  />
 	<rosparam file="$(find teb_local_planner_tutorials)/cfg/diff_drive/global_costmap_params.yaml" command="load"  />
 	<rosparam file="$(find teb_local_planner_tutorials)/cfg/diff_drive/teb_local_planner_params.yaml" command="load" />
 
 	<param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
-	<param name="controller_frequency" value="5.0" />
+	<param name="controller_frequency" value="10.0" />
 	<param name="controller_patience" value="15.0" />
  </node>
 
-  
-  
+
    <!-- chay server websocket --> 
-  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
-  
-  <!-- chay rplidar --> 
-  <include file="$(find rplidar_ros)/launch/rplidar_a1.launch" />
+  <!-- <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" /> -->
   
 
+  
+  <include file="$(find ira_laser_tools)/launch/laserscan_multi_merger.launch" />
+  
   
   
 
